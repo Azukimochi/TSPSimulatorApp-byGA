@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GenomSubPanelController">
+   <children>
+      <TableView fx:id="table" editable="true"  layoutX="14.0" layoutY="14.0" prefHeight="373.0" prefWidth="574.0">
+        <columns>
+          <TableColumn fx:id="ColumGen" prefWidth="50.0" text="世代"  />
+          <TableColumn fx:id="ColumEval" prefWidth="140.0" text="評価" />
+          <TableColumn fx:id="ColumGenom" prefWidth="450.0" text="遺伝子" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

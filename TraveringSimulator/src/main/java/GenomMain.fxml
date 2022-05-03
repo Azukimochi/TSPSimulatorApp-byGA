@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.collections.ObservableList?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="550.0" prefWidth="815.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GenomPanelController">
+   <children>
+      <Pane layoutX="14.0" layoutY="443.0" prefHeight="85.0" prefWidth="136.0" style="-fx-background-color: lightgray;">
+         <children>
+            <Button fx:id="button_newCity" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onButtonCity" prefHeight="25.0" prefWidth="110.0" text="都市のランダム生成" />
+            <Button fx:id="button_Reset" layoutX="15.0" layoutY="49.0" mnemonicParsing="false" onAction="#onButtonReset" text="リセット" />
+            <Button fx:id="button_Initialize" layoutX="73.0" layoutY="49.0" mnemonicParsing="false" onAction="#onButtonInit" text="初期化" />
+         </children>
+      </Pane>
+      <LineChart fx:id="chart" createSymbols="false" layoutX="422.0" layoutY="31.0" prefHeight="334.0" prefWidth="367.0" stylesheets="@application.css">
+        <xAxis>
+          <NumberAxis side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <Pane layoutX="153.0" layoutY="443.0" prefHeight="85.0" prefWidth="261.0" style="-fx-background-color: lightgray;">
+         <children>
+            <ComboBox fx:id="box_CityNum" layoutX="63.0" layoutY="14.0" prefHeight="25.0" prefWidth="66.0">
+            	<items>
+            		<FXCollections fx:factory="observableArrayList">
+            			<String fx:value="3" />
+            			<String fx:value="5" />
+            			<String fx:value="10" />
+            			<String fx:value="15" />
+            			<String fx:value="30" />
+            			<String fx:value="50" />
+            			<String fx:value="100" />
+            		</FXCollections>
+            	</items>
+            </ComboBox>
+            <ComboBox fx:id="box_GenNum" layoutX="141.0" layoutY="49.0" prefHeight="25.0" prefWidth="116.0">
+            <items>
+            		<FXCollections fx:factory="observableArrayList">
+            			<String fx:value="1" />
+            			<String fx:value="5" />
+            			<String fx:value="10" />
+            			<String fx:value="20" />
+            			<String fx:value="30" />
+            			<String fx:value="50" />
+            			<String fx:value="100" />
+            			<String fx:value="500" />
+            		</FXCollections>
+            	</items>
+            </ComboBox>
+            <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="都市の数" wrappingWidth="66.13671875" />
+            <Text layoutX="14.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="実行あたりの世代数" wrappingWidth="109.744140625" />
+            <Text layoutX="141.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="染色体数" />
+            <ComboBox fx:id="box_popNum" layoutX="189.0" layoutY="14.0" prefHeight="25.0" prefWidth="66.0">
+            <items>
+            		<FXCollections fx:factory="observableArrayList">
+            			<String fx:value="100" />
+            			<String fx:value="200" />
+            			<String fx:value="500" />
+            			<String fx:value="750" />
+            			<String fx:value="1000" />
+            		</FXCollections>
+            	</items>
+            </ComboBox>
+         </children>
+      </Pane>
+      <Pane layoutX="611.0" layoutY="376.0" prefHeight="110.0" prefWidth="190.0" style="-fx-background-color: lightgray;">
+         <children>
+            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="選択方法" />
+            <Text layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="トーナメント選択数" />
+            <ComboBox fx:id="type_choice" layoutX="72.0" layoutY="10.0" prefHeight="25.0" prefWidth="110.0">
+            <items>
+            		<FXCollections fx:factory="observableArrayList">
+            			<String fx:value="ルーレット" />
+            			<String fx:value="トーナメント" />
+            			<String fx:value="ランダム" />
+            		</FXCollections>
+            	</items>
+            </ComboBox>
+            <ComboBox fx:id="box_tournamentSize" layoutX="115.0" layoutY="43.0" prefHeight="25.0" prefWidth="66.0">
+            <items>
+            		<FXCollections fx:factory="observableArrayList">
+            			<String fx:value="2" />
+            			<String fx:value="3" />
+            			<String fx:value="5" />
+            			<String fx:value="10" />
+            			<String fx:value="20" />
+            			<String fx:value="50" />
+            		</FXCollections>
+            	</items>
+            </ComboBox>
+            <CheckBox fx:id="check_Elite" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#changeElite" selected="true" text="エリート選択" />
+            <ComboBox fx:id="box_eliteSize" layoutX="115.0" layoutY="76.0" prefHeight="25.0" prefWidth="66.0">
+            <items>
+            		<FXCollections fx:factory="observableArrayList">
+            			<String fx:value="1" />
+            			<String fx:value="5" />
+            			<String fx:value="10" />
+            			<String fx:value="20" />
+            			<String fx:value="50" />
+            		</FXCollections>
+            	</items>
+            </ComboBox>
+         </children>
+      </Pane>
+      <MenuBar prefHeight="25.0" prefWidth="811.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="ファイル">
+            <items>
+              <MenuItem fx:id="menu_Open" mnemonicParsing="false" onAction="#onMenuOpen" text="都市データを開く" />
+              <MenuItem fx:id="menu_Save" mnemonicParsing="false" onAction="#onMenuSave" text="都市データを保存" />
+              <MenuItem fx:id="menu_SaveIMG" mnemonicParsing="false" onAction="#onMenuSaveIMG" text="現在の都市画像を保存"/>
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="表示">
+              <items>
+                  <RadioMenuItem fx:id="radio_Limit" mnemonicParsing="false" text="1000世代制限" />
+              </items>
+            </Menu>
+            	<Menu mnemonicParsing="false" text="ウィンドウ">
+            		<items>
+            			<MenuItem fx:id="menu_OpenWindow" mnemonicParsing="false" onAction="#onOpenSubWindow" text="世代リストを開く"/>
+            		</items>
+           	 </Menu>
+        </menus>
+      </MenuBar>
+      <Pane layoutX="421.0" layoutY="376.0" prefHeight="152.0" prefWidth="185.0" style="-fx-background-color: lightgray;">
+         <children>
+            <Text layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="交叉確率" />
+            <Text layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="変異確率" />
+            <Text layoutX="13.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="交叉タイプ" />
+            <ComboBox fx:id="box_cross" layoutX="105.0" layoutY="15.0" prefHeight="25.0" prefWidth="66.0">
+            <items>
+            		<FXCollections fx:factory="observableArrayList">
+            			<String fx:value="5" />
+            			<String fx:value="10" />
+            			<String fx:value="25" />
+            			<String fx:value="50" />
+            			<String fx:value="75" />
+            			<String fx:value="100" />
+            		</FXCollections>
+            	</items>
+            </ComboBox>
+            <ComboBox fx:id="box_mutation" layoutX="105.0" layoutY="50.0" prefHeight="25.0" prefWidth="66.0">
+            <items>
+            		<FXCollections fx:factory="observableArrayList">
+            			<String fx:value="5" />
+            			<String fx:value="10" />
+            			<String fx:value="25" />
+            			<String fx:value="50" />
+            			<String fx:value="75" />
+            			<String fx:value="100" />
+            		</FXCollections>
+            	</items>
+            </ComboBox>
+            <ComboBox fx:id="type_crossOver" layoutX="75.0" layoutY="85.0" prefHeight="25.0" prefWidth="96.0">
+                        <items>
+            		<FXCollections fx:factory="observableArrayList">
+            			<String fx:value="1点交叉" />
+            			<String fx:value="2点交叉" />
+            		</FXCollections>
+            	</items>
+            </ComboBox>
+            <ComboBox fx:id="type_mutation" layoutX="75.0" layoutY="120.0" prefHeight="25.0" prefWidth="96.0">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="ノーマル" />
+                     <String fx:value="逆位" />
+                  </FXCollections>
+               </items>
+            </ComboBox>
+            <Text layoutX="13.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="変異タイプ" />
+         </children>
+      </Pane>
+      <Pane layoutX="611.0" layoutY="493.0" prefHeight="35.0" prefWidth="190.0" style="-fx-background-color: lightgray;">
+         <children>
+            <Button fx:id="button_execute" layoutX="66.0" layoutY="4.0" mnemonicParsing="false" onAction="#onButtonExcute" prefHeight="25.0" prefWidth="110.0" text="実行" />
+            <Button fx:id="button_apply" layoutX="7.0" layoutY="4.0" mnemonicParsing="false" onAction="#onButtonApply" prefHeight="25.0" prefWidth="52.0" text="適用" />
+         </children>
+      </Pane>
+      <ImageView fx:id="cityPanel" fitHeight="400.0" fitWidth="400.0" layoutX="14.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="infoText" layoutX="445.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="累積交配世代数" wrappingWidth="136.0" />
+      <Text fx:id="infoDist" layoutX="647.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="距離" wrappingWidth="85" />
+   </children>
+</AnchorPane>
