@@ -6,5 +6,5 @@
 ```
 
 ### List of libraries used in this project
-1. JavaFX 1.8
-2. ScaledFX
+1. JavaFX 1.8 <https://github.com/openjdk/jfx>
+2. ScaledFX <https://github.com/miho/ScaledFX>
