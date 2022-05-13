@@ -1,5 +1,4 @@
 
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -172,17 +171,11 @@ public class GenomPanelController implements Initializable {
 
 	@FXML
 	public void onButtonApply(ActionEvent event) {
-		GA.initialize(
-				Integer.valueOf(box_CityNum.getValue()),
-				Integer.valueOf(box_GenNum.getValue()),
-				Integer.valueOf(box_popNum.getValue()),
-				Integer.valueOf(box_cross.getValue()),
-				Integer.valueOf(box_mutation.getValue()),
-				Integer.valueOf(box_eliteSize.getValue()),
-				Integer.valueOf(box_tournamentSize.getValue()),
-				check_Elite.isSelected(),
-				CrossType.anyMatch(type_crossOver.getValue()),
-				MutationType.anyMatch(type_mutation.getValue()),
+		GA.initialize(Integer.valueOf(box_CityNum.getValue()), Integer.valueOf(box_GenNum.getValue()),
+				Integer.valueOf(box_popNum.getValue()), Integer.valueOf(box_cross.getValue()),
+				Integer.valueOf(box_mutation.getValue()), Integer.valueOf(box_eliteSize.getValue()),
+				Integer.valueOf(box_tournamentSize.getValue()), check_Elite.isSelected(),
+				CrossType.anyMatch(type_crossOver.getValue()), MutationType.anyMatch(type_mutation.getValue()),
 				ChoiceType.anyMatch(type_choice.getValue()));
 		componentChangeEnable(true);
 		button_newCity.setDisable(true);
@@ -200,12 +193,13 @@ public class GenomPanelController implements Initializable {
 		chart.getData().setAll(GenomChartModel.addChartModel(genom, GA.getWorstGenom(), radio_Limit.isSelected()));
 		sumGen += Integer.valueOf(box_GenNum.getValue());
 		infoText.setText("累積交配数：" + sumGen);
-		infoDist.setText("距離：" + GA.getBestGenom().get(GA.getBestGenom().size()-1).getDistance());
+		infoDist.setText("距離：" + GA.getBestGenom().get(GA.getBestGenom().size() - 1).getDistance());
 
 		GenomSubPanelController.deleteTableDate();
 		List<Genom> bg = GA.getBestGenom();
-		for(int i = 0; i < bg.size(); i++) {
-			GenomSubPanelController.setTableDate(new GenDate(i+1, bg.get(i).getEval(), bg.get(i).getList().toString()));
+		for (int i = 0; i < bg.size(); i++) {
+			GenomSubPanelController.setTableDate(
+					new GenDate(i + 1, bg.get(i).getEval(), bg.get(i).getDistance(), bg.get(i).getList().toString()));
 		}
 	}
 
@@ -219,6 +213,7 @@ public class GenomPanelController implements Initializable {
 			GenomFileIO.saveCityPos(f);
 		Logger.Log(event.getTarget().toString());
 	}
+
 	@FXML
 	public void onMenuSaveIMG(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
@@ -255,6 +250,7 @@ public class GenomPanelController implements Initializable {
 		}
 		Logger.Log(event.getTarget().toString());
 	}
+
 	@FXML
 	public void onOpenSubWindow(ActionEvent event) {
 		GenomMain.openSubWindow();

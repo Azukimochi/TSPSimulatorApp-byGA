@@ -10,6 +10,7 @@
         <columns>
           <TableColumn fx:id="ColumGen" prefWidth="50.0" text="世代"  />
           <TableColumn fx:id="ColumEval" prefWidth="140.0" text="評価" />
+          <TableColumn fx:id="ColumDist" prefWidth="60.0" text="距離" />
           <TableColumn fx:id="ColumGenom" prefWidth="450.0" text="遺伝子" />
         </columns>
       </TableView>

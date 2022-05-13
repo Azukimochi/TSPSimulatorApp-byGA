@@ -24,6 +24,8 @@ public class GenomSubPanelController implements Initializable{
 	@FXML
 	private TableColumn<GenDate, Double> ColumEval;
 	@FXML
+	private TableColumn<GenDate, Double> ColumDist;
+	@FXML
 	private TableColumn<GenDate, String> ColumGenom;
 
 	@Override
@@ -32,6 +34,7 @@ public class GenomSubPanelController implements Initializable{
 		System.out.println("ロード");
 		ColumGen.setCellValueFactory(new PropertyValueFactory<>("gen"));
 		ColumEval.setCellValueFactory(new PropertyValueFactory<>("eval"));
+		ColumDist.setCellValueFactory(new PropertyValueFactory<>("dist"));
 		ColumGenom.setCellValueFactory(new PropertyValueFactory<>("genom"));
 
 		ColumGenom.setCellFactory(TextFieldTableCell.<GenDate>forTableColumn());
