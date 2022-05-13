@@ -20,11 +20,11 @@ public class GenomSubPanelController implements Initializable{
 	@FXML
 	private TableView<GenDate> table;
 	@FXML
-	private TableColumn<GenDate, Integer> ColumGen;
+	private TableColumn<GenDate, String> ColumGen;
 	@FXML
-	private TableColumn<GenDate, Double> ColumEval;
+	private TableColumn<GenDate, String> ColumEval;
 	@FXML
-	private TableColumn<GenDate, Double> ColumDist;
+	private TableColumn<GenDate, String> ColumDist;
 	@FXML
 	private TableColumn<GenDate, String> ColumGenom;
 
@@ -37,6 +37,20 @@ public class GenomSubPanelController implements Initializable{
 		ColumDist.setCellValueFactory(new PropertyValueFactory<>("dist"));
 		ColumGenom.setCellValueFactory(new PropertyValueFactory<>("genom"));
 
+		ColumDist.setCellFactory(TextFieldTableCell.<GenDate>forTableColumn());
+		ColumDist.setOnEditCommit(
+		    (CellEditEvent<GenDate, String> t) -> {
+		        ((GenDate) t.getTableView().getItems().get(
+		            t.getTablePosition().getRow())
+		            ).setGenom(t.getNewValue());
+		});
+		ColumEval.setCellFactory(TextFieldTableCell.<GenDate>forTableColumn());
+		ColumEval.setOnEditCommit(
+		    (CellEditEvent<GenDate, String> t) -> {
+		        ((GenDate) t.getTableView().getItems().get(
+		            t.getTablePosition().getRow())
+		            ).setGenom(t.getNewValue());
+		});
 		ColumGenom.setCellFactory(TextFieldTableCell.<GenDate>forTableColumn());
 		ColumGenom.setOnEditCommit(
 		    (CellEditEvent<GenDate, String> t) -> {
