@@ -5,8 +5,8 @@
 	<groupId>com.TraveringSimulator</groupId>
 	<artifactId>TraveringSimulator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
-	
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.openjfx</groupId>
@@ -43,41 +43,56 @@
 			<artifactId>javafx-media</artifactId>
 			<version>17</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.7</version>
+		</dependency>
 	</dependencies>
-	
+
 	<build>
-        <plugins>
-            <!-- 実行可能jarファイル用のプラグイン -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <!-- TODO jarファイルの名前になるので適宜修正 -->
-                    <finalName>javafx-example</finalName>
-                    <descriptorRefs>
-                        <!-- 依存するリソースをすべてjarに同梱する -->
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <!-- TODO mainを実行するクラスを指定 -->
-                            <mainClass>jp.gr.java_conf.tsyki.javafx.EntryPoint</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <!-- idタグは任意の文字列であれば何でもよい -->
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+		<plugins>
+			<!-- 実行可能jarファイル用のプラグイン -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<!-- TODO jarファイルの名前になるので適宜修正 -->
+					<finalName>javafx-example</finalName>
+					<descriptorRefs>
+						<!-- 依存するリソースをすべてjarに同梱する -->
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<!-- TODO mainを実行するクラスを指定 -->
+							<mainClass>jp.gr.java_conf.tsyki.javafx.EntryPoint</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<!-- idタグは任意の文字列であれば何でもよい -->
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
 

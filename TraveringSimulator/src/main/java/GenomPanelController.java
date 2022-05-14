@@ -69,6 +69,10 @@ public class GenomPanelController implements Initializable {
 	@FXML
 	private MenuItem menu_Save;
 	@FXML
+	private MenuItem menu_GenOpen;
+	@FXML
+	private MenuItem menu_GenSave;
+	@FXML
 	private MenuItem menu_SaveIMG;
 	@FXML
 	private MenuItem menu_OpenWindow;
@@ -171,14 +175,21 @@ public class GenomPanelController implements Initializable {
 
 	@FXML
 	public void onButtonApply(ActionEvent event) {
-		GA.initialize(Integer.valueOf(box_CityNum.getValue()), Integer.valueOf(box_GenNum.getValue()),
-				Integer.valueOf(box_popNum.getValue()), Integer.valueOf(box_cross.getValue()),
-				Integer.valueOf(box_mutation.getValue()), Integer.valueOf(box_eliteSize.getValue()),
-				Integer.valueOf(box_tournamentSize.getValue()), check_Elite.isSelected(),
-				CrossType.anyMatch(type_crossOver.getValue()), MutationType.anyMatch(type_mutation.getValue()),
+		GA.initialize(
+				Integer.valueOf(box_CityNum.getValue()), 
+				Integer.valueOf(box_GenNum.getValue()),
+				Integer.valueOf(box_popNum.getValue()), 
+				Integer.valueOf(box_cross.getValue()),
+				Integer.valueOf(box_mutation.getValue()), 
+				Integer.valueOf(box_eliteSize.getValue()),
+				Integer.valueOf(box_tournamentSize.getValue()), 
+				check_Elite.isSelected(),
+				CrossType.anyMatch(type_crossOver.getValue()), 
+				MutationType.anyMatch(type_mutation.getValue()),
 				ChoiceType.anyMatch(type_choice.getValue()));
 		componentChangeEnable(true);
 		button_newCity.setDisable(true);
+		menu_GenSave.setDisable(false);
 		Runtime r = Runtime.getRuntime();
 		r.gc();
 	}
@@ -207,11 +218,43 @@ public class GenomPanelController implements Initializable {
 	public void onMenuSave(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("ファイル保存");
-		fileChooser.setInitialFileName("CityPos.csv");
+		fileChooser.setInitialFileName("CityPos.json");
 		File f = fileChooser.showSaveDialog(GenomMain.getStage());
 		if (f != null)
 			GenomFileIO.saveCityPos(f);
 		Logger.Log(event.getTarget().toString());
+	}
+
+	@FXML
+	public void onMenuOpen(ActionEvent event) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("ファイルを読み込む");
+		fileChooser.getExtensionFilters().add(new ExtensionFilter(".JSONファイル", "*.json"));
+		fileChooser.getExtensionFilters().add(new ExtensionFilter("All", "*.*"));
+		File f = fileChooser.showOpenDialog(GenomMain.getStage());
+		if (f != null) {
+			int city = GenomFileIO.openCityPos(f);
+			if (city != 0) {
+				box_CityNum.setValue(String.valueOf(city));
+				cityImage = new GenerateCityImage();
+				cityPanel.setImage(new Image(cityImage.Generate(null, false)));
+				button_apply.setDisable(false);
+				menu_Save.setDisable(false);
+			}
+		}
+		Logger.Log(event.getTarget().toString());
+	}
+
+	@FXML
+	public void onMenuGenSave(ActionEvent event) {
+		System.out.println("gensave");
+		GenomFileIO.saveGenDate(new File("F:/"));
+
+	}
+
+	@FXML
+	public void onMenuGenOpen(ActionEvent event) {
+		System.out.println("genOpen");
 	}
 
 	@FXML
@@ -228,27 +271,6 @@ public class GenomPanelController implements Initializable {
 				e.printStackTrace();
 			}
 		}
-
-	}
-
-	@FXML
-	public void onMenuOpen(ActionEvent event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("ファイルを読み込む");
-		fileChooser.getExtensionFilters().add(new ExtensionFilter(".CSVファイル", "*.csv"));
-		fileChooser.getExtensionFilters().add(new ExtensionFilter("All", "*.*"));
-		File f = fileChooser.showOpenDialog(GenomMain.getStage());
-		if (f != null) {
-			int city = GenomFileIO.openCityPos(f);
-			if (city != 0) {
-				box_CityNum.setValue(String.valueOf(city));
-				cityImage = new GenerateCityImage();
-				cityPanel.setImage(new Image(cityImage.Generate(null, false)));
-				button_apply.setDisable(false);
-				menu_Save.setDisable(false);
-			}
-		}
-		Logger.Log(event.getTarget().toString());
 	}
 
 	@FXML
@@ -279,6 +301,8 @@ public class GenomPanelController implements Initializable {
 		button_apply.setDisable(!bool);
 		menu_Save.setDisable(!bool);
 		menu_Open.setDisable(bool);
+		menu_GenOpen.setDisable(bool);
+		menu_GenSave.setDisable(!bool);
 		menu_SaveIMG.setDisable(!bool);
 	}
 }

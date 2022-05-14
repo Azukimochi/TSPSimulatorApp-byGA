@@ -25,7 +25,4 @@ public class City{
 	public String toString() {
 		return "City [posX=" + posX + ", posY=" + posY + "]";
 	}
-	public String getFileFormat() {
-		return posX + "," + posY + "\n";
-	}
 }
