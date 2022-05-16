@@ -12,7 +12,6 @@ import GenomAlgo.GA;
 import JsonObject.JsonCityDate;
 import JsonObject.JsonGenomDate;
 import instance.City;
-import instance.Genom;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -81,10 +80,11 @@ public class GenomFileIO {
 		try /* (FileWriter filewriter = new FileWriter(url)) */ {
 
 			JsonGenomDate json = new JsonGenomDate();
+			/*
 			json.citynum = 10;
 			json.citypos = new City(50, 80);
 			json.genom = new Genom(5);
-
+			*/
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
