@@ -35,5 +35,8 @@ public enum ChoiceType {
 		default : return null;
 		}
 	}
+	public String toString() {
+		return this.name;
+	}
 
 }

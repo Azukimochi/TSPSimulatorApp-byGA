@@ -127,6 +127,13 @@ public class GA {
 		return BestGenom;
 	}
 	/**
+	 * 保存した現遺伝子群の取得
+	 * @return 遺伝子群
+	 */
+	public static List<Genom> getSaveGenom() {
+		return SaveGenomList;
+	}
+	/**
 	 * 処理の実行
 	 * @return 最良遺伝子群
 	 */

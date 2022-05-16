@@ -13,6 +13,7 @@ import Enum.ChoiceType;
 import Enum.CrossType;
 import Enum.MutationType;
 import GenomAlgo.GA;
+import JsonObject.JsonGenomDate;
 import instance.GenDate;
 import instance.Genom;
 import javafx.beans.value.ChangeListener;
@@ -247,9 +248,31 @@ public class GenomPanelController implements Initializable {
 
 	@FXML
 	public void onMenuGenSave(ActionEvent event) {
-		System.out.println("gensave");
-		GenomFileIO.saveGenDate(new File("F:/"));
-
+		JsonGenomDate jdate = new JsonGenomDate();
+		
+		jdate.cities = GA.getCity();
+		jdate.param_CityNum = Integer.valueOf(box_CityNum.getValue());
+		jdate.param_GenNum = Integer.valueOf(box_GenNum.getValue());
+		jdate.param_PopNum = Integer.valueOf(box_popNum.getValue());
+		jdate.param_Cross = Integer.valueOf(box_cross.getValue());
+		jdate.param_Mutation = Integer.valueOf(box_mutation.getValue());
+		jdate.type_Choice = ChoiceType.anyMatch(type_choice.getValue());
+		jdate.param_TournamentSize = Integer.valueOf(box_tournamentSize.getValue());
+		jdate.param_EliteSize = Integer.valueOf(box_eliteSize.getValue());
+		jdate.type_Crossover = CrossType.anyMatch(type_crossOver.getValue());
+		jdate.type_Mutation = MutationType.anyMatch(type_mutation.getValue());
+		
+		jdate.BestGenom = GA.getBestGenom();
+		jdate.WorstGenom = GA.getWorstGenom();
+		jdate.SaveGenomList = GA.getSaveGenom();
+		
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("ファイル保存");
+		fileChooser.setInitialFileName("GenomDate.json");
+		File f = fileChooser.showSaveDialog(GenomMain.getStage());
+		if (f != null)
+			GenomFileIO.saveGenDate(f, jdate);
+		Logger.Log(event.getTarget().toString());
 	}
 
 	@FXML
