@@ -27,7 +27,7 @@ public class GenomFileIO {
 		try (FileWriter filewriter = new FileWriter(url)) {
 			JsonCityDate jcity = new JsonCityDate();
 			jcity.cities = GA.getCity();
-			jcity.citynum =jcity.cities.length;
+			jcity.citynum = jcity.cities.length;
 
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -38,6 +38,7 @@ public class GenomFileIO {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * 街の座標データ読み込み
 	 * 
@@ -47,19 +48,19 @@ public class GenomFileIO {
 	public static int openCityPos(File url) {
 
 		JsonCityDate jcity = null;
-		
+
 		try (BufferedReader reader = new BufferedReader(new FileReader(url))) {
-			
+
 			StringBuilder json = new StringBuilder();
 			String line;
-			while((line = reader.readLine()) != null) {
+			while ((line = reader.readLine()) != null) {
 				json.append(line);
 			}
 			ObjectMapper mapper = new ObjectMapper();
 			jcity = mapper.readValue(json.toString(), JsonCityDate.class);
-			
-			for(City c : jcity.cities) {
-				if(0 <= c.getPosX() && c.getPosX() <= 300 && 0 <= c.getPosY() && c.getPosY() <= 300) {
+
+			for (City c : jcity.cities) {
+				if (0 <= c.getPosX() && c.getPosX() <= 300 && 0 <= c.getPosY() && c.getPosY() <= 300) {
 					Alert alrt = new Alert(AlertType.INFORMATION); // アラートを作成
 					alrt.setTitle("読み込みエラー");
 					alrt.setHeaderText("入力データが範囲外です(0 <= x <= 300)");
@@ -68,25 +69,56 @@ public class GenomFileIO {
 				}
 			}
 			GA.LoadCity(jcity.cities);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			Alert alrt = new Alert(AlertType.INFORMATION); // アラートを作成
+			alrt.setTitle("読み込みエラー");
+			alrt.setHeaderText("データの読み込みに失敗しました");
+			alrt.showAndWait(); // 表示
 		}
 		return jcity.citynum;
 	}
 
 	public static void saveGenDate(File url, JsonGenomDate jdate) {
 
-		try  (FileWriter filewriter = new FileWriter(url))  {
+		try (FileWriter filewriter = new FileWriter(url)) {
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 			String sjson = mapper.writeValueAsString(jdate);
 			System.out.println(sjson);
-			
+
 			filewriter.write(sjson);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public static JsonGenomDate ppenGenDate(File url) {
+
+		JsonGenomDate jsondate = null;
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(url))) {
+
+			StringBuilder json = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				json.append(line);
+			}
+			ObjectMapper mapper = new ObjectMapper();
+			jsondate = mapper.readValue(json.toString(), JsonGenomDate.class);
+			
+			if(jsondate.cities.length != jsondate.param_CityNum) 
+				throw new Exception();
+			if(jsondate.WorstGenom.length != jsondate.BestGenom.length && jsondate.BestGenom.length != jsondate.SaveGenom.length) 
+				throw new Exception();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Alert alrt = new Alert(AlertType.INFORMATION); // アラートを作成
+			alrt.setTitle("読み込みエラー");
+			alrt.setHeaderText("データの読み込みに失敗しました");
+			alrt.showAndWait(); // 表示
+		}
+		return jsondate;
+	}
 }

@@ -35,6 +35,7 @@ public enum ChoiceType {
 		default : return null;
 		}
 	}
+	@Override
 	public String toString() {
 		return this.name;
 	}

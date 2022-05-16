@@ -32,5 +32,9 @@ public enum MutationType {
 		default : return null;
 		}
 	}
+	@Override
+	public String toString() {
+		return name;
+	}
 
 }

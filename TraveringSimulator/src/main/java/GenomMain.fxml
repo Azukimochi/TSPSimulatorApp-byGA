@@ -149,9 +149,9 @@
 							onAction="#onMenuSave" text="都市データを保存" />
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem fx:id="menu_GenOpen" mnemonicParsing="false"
-							onAction="#onMenuGenOpen" text="遺伝子データを開く" />
+							onAction="#onMenuGenOpen" text="ファイルを開く" />
 						<MenuItem fx:id="menu_GenSave" mnemonicParsing="false"
-							onAction="#onMenuGenSave" text="遺伝子データを保存" />
+							onAction="#onMenuGenSave" text="保存" />
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem fx:id="menu_SaveIMG" mnemonicParsing="false"
 							onAction="#onMenuSaveIMG" text="現在の都市画像を保存" />

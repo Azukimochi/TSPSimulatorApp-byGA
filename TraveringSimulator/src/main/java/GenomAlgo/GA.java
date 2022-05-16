@@ -64,6 +64,13 @@ public class GA {
 		return Cities;
 	}
 	/**
+	 * 町データの設定
+	 * @param c 町データ
+	 */
+	public static void setCity(City[] c) {
+		Cities = c;
+	}
+	/**
 	 * リセットボタン押下時のパラメータ初期化
 	 */
 	public static void reset() {
@@ -132,6 +139,19 @@ public class GA {
 	 */
 	public static List<Genom> getSaveGenom() {
 		return SaveGenomList;
+	}
+	/**
+	 * ファイルからの読み込み用
+	 * @param g 遺伝子
+	 */
+	public static void setWorstGenom(List<Genom> g) {
+		WorstGenom = g;
+	}
+	public static void setBestGenom(List<Genom> g) {
+		BestGenom = g;
+	}
+	public static void setSaveGenom(List<Genom> g) {
+		SaveGenomList = g;
 	}
 	/**
 	 * 処理の実行

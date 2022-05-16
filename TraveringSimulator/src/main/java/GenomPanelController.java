@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,6 +15,7 @@ import Enum.ChoiceType;
 import Enum.CrossType;
 import Enum.MutationType;
 import GenomAlgo.GA;
+import JsonObject.JsonGenom;
 import JsonObject.JsonGenomDate;
 import instance.GenDate;
 import instance.Genom;
@@ -104,17 +107,24 @@ public class GenomPanelController implements Initializable {
 	@FXML
 	private Text infoDist;
 
+	/**
+	 * ボタン内容の変更のリスナ
+	 */
 	public void setValueToGA() {
 		button_apply.setDisable(true);
 		Logger.Log("wasChanged");
 	}
-
+	/**
+	 * グラフ描画更新用
+	 */
 	public void updateGraph() {
 		if (GA.getBestGenom().size() != 0)
 			chart.getData().setAll(
 					GenomChartModel.addChartModel(GA.getBestGenom(), GA.getWorstGenom(), radio_Limit.isSelected()));
 	}
-
+	/**
+	 * ボタン：初期化
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		cityPanel.setImage(new Image(GenerateCityImage.clearCityImage()));
@@ -137,7 +147,10 @@ public class GenomPanelController implements Initializable {
 		box_CityNum.valueProperty().addListener(changeCity);
 		radio_Limit.selectedProperty().addListener(changeLimit);
 	}
-
+	/**
+	 * ボタン：都市生成
+	 * @param event
+	 */
 	@FXML
 	public void onButtonCity(ActionEvent event) {
 		cityImage = new GenerateCityImage(Integer.valueOf(box_CityNum.getValue()));
@@ -147,7 +160,10 @@ public class GenomPanelController implements Initializable {
 		menu_Save.setDisable(false);
 		Logger.Log(event.getTarget().toString());
 	}
-
+	/**
+	 * ボタン：リセット
+	 * @param event
+	 */
 	@FXML
 	public void onButtonReset(ActionEvent event) {
 		System.out.println("----------Reset----------");
@@ -161,7 +177,10 @@ public class GenomPanelController implements Initializable {
 		GA.reset();
 		GenomSubPanelController.deleteTableDate();
 	}
-
+	/**
+	 * ボタン：初期化
+	 * @param event
+	 */
 	@FXML
 	public void onButtonInit(ActionEvent event) {
 		System.out.println("----------Initialize----------");
@@ -173,20 +192,17 @@ public class GenomPanelController implements Initializable {
 		GA.reset();
 		GenomSubPanelController.deleteTableDate();
 	}
-
+	/**
+	 * ボタン：適用
+	 * @param event
+	 */
 	@FXML
 	public void onButtonApply(ActionEvent event) {
-		GA.initialize(
-				Integer.valueOf(box_CityNum.getValue()), 
-				Integer.valueOf(box_GenNum.getValue()),
-				Integer.valueOf(box_popNum.getValue()), 
-				Integer.valueOf(box_cross.getValue()),
-				Integer.valueOf(box_mutation.getValue()), 
-				Integer.valueOf(box_eliteSize.getValue()),
-				Integer.valueOf(box_tournamentSize.getValue()), 
-				check_Elite.isSelected(),
-				CrossType.anyMatch(type_crossOver.getValue()), 
-				MutationType.anyMatch(type_mutation.getValue()),
+		GA.initialize(Integer.valueOf(box_CityNum.getValue()), Integer.valueOf(box_GenNum.getValue()),
+				Integer.valueOf(box_popNum.getValue()), Integer.valueOf(box_cross.getValue()),
+				Integer.valueOf(box_mutation.getValue()), Integer.valueOf(box_eliteSize.getValue()),
+				Integer.valueOf(box_tournamentSize.getValue()), check_Elite.isSelected(),
+				CrossType.anyMatch(type_crossOver.getValue()), MutationType.anyMatch(type_mutation.getValue()),
 				ChoiceType.anyMatch(type_choice.getValue()));
 		componentChangeEnable(true);
 		button_newCity.setDisable(true);
@@ -194,7 +210,10 @@ public class GenomPanelController implements Initializable {
 		Runtime r = Runtime.getRuntime();
 		r.gc();
 	}
-
+	/**
+	 * ボタン：実行
+	 * @param event
+	 */
 	@FXML
 	public void onButtonExcute(ActionEvent event) {
 		genom = GA.excute();
@@ -214,7 +233,10 @@ public class GenomPanelController implements Initializable {
 					new GenDate(i + 1, bg.get(i).getEval(), bg.get(i).getDistance(), bg.get(i).getList().toString()));
 		}
 	}
-
+	/**
+	 * メニュー：都市を保存
+	 * @param event
+	 */
 	@FXML
 	public void onMenuSave(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
@@ -225,7 +247,10 @@ public class GenomPanelController implements Initializable {
 			GenomFileIO.saveCityPos(f);
 		Logger.Log(event.getTarget().toString());
 	}
-
+	/**
+	 * メニュー：都市を開く
+	 * @param event
+	 */
 	@FXML
 	public void onMenuOpen(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
@@ -245,11 +270,15 @@ public class GenomPanelController implements Initializable {
 		}
 		Logger.Log(event.getTarget().toString());
 	}
+	/**
+	 * メニュー：保存
+	 * @param event
+	 */
 
 	@FXML
 	public void onMenuGenSave(ActionEvent event) {
 		JsonGenomDate jdate = new JsonGenomDate();
-		
+
 		jdate.cities = GA.getCity();
 		jdate.param_CityNum = Integer.valueOf(box_CityNum.getValue());
 		jdate.param_GenNum = Integer.valueOf(box_GenNum.getValue());
@@ -261,11 +290,32 @@ public class GenomPanelController implements Initializable {
 		jdate.param_EliteSize = Integer.valueOf(box_eliteSize.getValue());
 		jdate.type_Crossover = CrossType.anyMatch(type_crossOver.getValue());
 		jdate.type_Mutation = MutationType.anyMatch(type_mutation.getValue());
+		jdate.isUseElite = check_Elite.isSelected();
+
+		List<JsonGenom> list = new LinkedList<JsonGenom>();
+		for(Genom g : GA.getBestGenom()) {
+			JsonGenom jg = new JsonGenom();
+			jg.genom = g.getList().toArray(new Integer[g.getList().size()]);
+			list.add(jg);
+		}
+		jdate.BestGenom =  list.toArray(new JsonGenom[list.size()]);
+		list = new LinkedList<JsonGenom>();
 		
-		jdate.BestGenom = GA.getBestGenom();
-		jdate.WorstGenom = GA.getWorstGenom();
-		jdate.SaveGenomList = GA.getSaveGenom();
+		for(Genom g : GA.getWorstGenom()) {
+			JsonGenom jg = new JsonGenom();
+			jg.genom = g.getList().toArray(new Integer[g.getList().size()]);
+			list.add(jg);
+		}
+		jdate.WorstGenom = list.toArray(new JsonGenom[list.size()]);
+		list = new LinkedList<JsonGenom>();
 		
+		for(Genom g : GA.getSaveGenom()) {
+			JsonGenom jg = new JsonGenom();
+			jg.genom = g.getList().toArray(new Integer[g.getList().size()]);
+			list.add(jg);
+		}
+		jdate.SaveGenom = list.toArray(new JsonGenom[list.size()]);
+
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("ファイル保存");
 		fileChooser.setInitialFileName("GenomDate.json");
@@ -274,12 +324,85 @@ public class GenomPanelController implements Initializable {
 			GenomFileIO.saveGenDate(f, jdate);
 		Logger.Log(event.getTarget().toString());
 	}
-
+	/**
+	 * メニュー：開く
+	 * @param event
+	 */
 	@FXML
 	public void onMenuGenOpen(ActionEvent event) {
-		System.out.println("genOpen");
-	}
 
+		JsonGenomDate jdate;
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("ファイルを読み込む");
+		fileChooser.getExtensionFilters().add(new ExtensionFilter(".JSONファイル", "*.json"));
+		fileChooser.getExtensionFilters().add(new ExtensionFilter("All", "*.*"));
+		File f = fileChooser.showOpenDialog(GenomMain.getStage());
+		if (f != null) {
+			jdate = GenomFileIO.ppenGenDate(f);
+
+			componentChangeEnable(false);
+
+			GA.reset();
+			GA.setCity(jdate.cities);
+			GA.initialize(jdate.param_CityNum, jdate.param_GenNum, jdate.param_PopNum, jdate.param_Cross,
+					jdate.param_Mutation, jdate.param_EliteSize, jdate.param_TournamentSize, jdate.isUseElite, jdate.type_Crossover,
+					jdate.type_Mutation, jdate.type_Choice);
+			
+			List<Genom> list = new LinkedList<Genom>();
+			for(JsonGenom g : jdate.WorstGenom) 
+				list.add(new Genom(Arrays.asList(g.genom)));
+			GA.setWorstGenom(list);
+			list = new LinkedList<Genom>();
+			for(JsonGenom g : jdate.BestGenom) 
+				list.add(new Genom(Arrays.asList(g.genom)));
+			GA.setBestGenom(list);
+			list = new LinkedList<Genom>();
+			for(JsonGenom g : jdate.SaveGenom)
+				list.add(new Genom(Arrays.asList(g.genom)));
+			GA.setSaveGenom(list);
+
+			box_CityNum.setValue(String.valueOf(jdate.param_CityNum));
+			box_GenNum.setValue(String.valueOf(jdate.param_GenNum));
+			box_tournamentSize.setValue(String.valueOf(jdate.param_TournamentSize));
+			box_eliteSize.setValue(String.valueOf(jdate.param_EliteSize));
+			box_popNum.setValue(String.valueOf(jdate.param_PopNum));
+			box_cross.setValue(String.valueOf(jdate.param_Cross));
+			box_mutation.setValue(String.valueOf(jdate.param_Mutation));
+			type_crossOver.setValue(jdate.type_Crossover.toString());
+			type_mutation.setValue(jdate.type_Mutation.toString());
+			type_choice.setValue(jdate.type_Choice.toString());
+			check_Elite.setSelected(jdate.isUseElite);
+			
+			
+			componentChangeEnable(true);
+			button_newCity.setDisable(true);
+			menu_GenSave.setDisable(false);
+			
+			button_apply.setDisable(true);
+			Logger.Log(event.getTarget().toString());
+			
+			genom = GA.getBestGenom();
+			chart.getData().setAll(GenomChartModel.addEmptyModel());
+			cityImage = new GenerateCityImage();
+			cityPanel.setImage(new Image(cityImage.Generate(genom.get(genom.size() - 1), true)));
+			chart.getData().setAll(GenomChartModel.addChartModel(genom, GA.getWorstGenom(), radio_Limit.isSelected()));
+			
+			GenomSubPanelController.deleteTableDate();
+			List<Genom> bg = GA.getBestGenom();
+			for (int i = 0; i < bg.size(); i++) {
+				GenomSubPanelController.setTableDate(
+						new GenDate(i + 1, bg.get(i).getEval(), bg.get(i).getDistance(), bg.get(i).getList().toString()));
+			}
+			sumGen = GA.getBestGenom().size();
+			infoText.setText("累積交配数：" + sumGen);
+			infoDist.setText("距離：" + GA.getBestGenom().get(GA.getBestGenom().size() - 1).getDistance());
+		}
+	}
+	/**
+	 * メニュー：都市画像を保存
+	 * @param event
+	 */
 	@FXML
 	public void onMenuSaveIMG(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
@@ -295,16 +418,21 @@ public class GenomPanelController implements Initializable {
 			}
 		}
 	}
-
+	/**
+	 * サブウインドウの表示
+	 * @param event
+	 */
 	@FXML
 	public void onOpenSubWindow(ActionEvent event) {
 		GenomMain.openSubWindow();
 	}
-
 	@FXML
 	public void changeElite(ActionEvent event) {
 	}
-
+	/**
+	 * コンポーネント有効/無効
+	 * @param bool
+	 */
 	private void componentChangeEnable(boolean bool) {
 		sumGen = 0;
 		infoText.setText("");

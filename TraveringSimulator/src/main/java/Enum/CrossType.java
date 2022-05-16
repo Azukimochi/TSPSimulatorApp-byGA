@@ -30,4 +30,8 @@ public enum CrossType{
 		default : return null;
 		}
 	}
+	@Override
+	public String toString() {
+		return name;
+	}
 }
