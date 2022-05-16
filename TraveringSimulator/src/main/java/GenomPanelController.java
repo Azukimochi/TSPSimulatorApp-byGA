@@ -31,6 +31,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -146,6 +147,11 @@ public class GenomPanelController implements Initializable {
 		chart.setAnimated(false);
 		box_CityNum.valueProperty().addListener(changeCity);
 		radio_Limit.selectedProperty().addListener(changeLimit);
+		addTooltip(button_Initialize, "すべてを初期化します");
+		addTooltip(button_Reset, "都市データを保持したまま遺伝子を初期化します");
+		addTooltip(button_apply, "現在の設定を適用します");
+		addTooltip(button_execute, "処理を実行します");
+		addTooltip(button_newCity, "現在の設定で都市を生成します");
 	}
 	/**
 	 * ボタン：都市生成
@@ -191,6 +197,17 @@ public class GenomPanelController implements Initializable {
 		button_Reset.setDisable(true);
 		GA.reset();
 		GenomSubPanelController.deleteTableDate();
+		box_CityNum.setValue("3");
+		box_GenNum.setValue("10");
+		box_tournamentSize.setValue("5");
+		box_eliteSize.setValue("3");
+		box_popNum.setValue("100");
+		box_cross.setValue("10");
+		box_mutation.setValue("5");
+		type_crossOver.setValue("1点交叉");
+		type_mutation.setValue("ノーマル");
+		type_choice.setValue("ルーレット");
+		check_Elite.setSelected(true);
 	}
 	/**
 	 * ボタン：適用
@@ -428,6 +445,15 @@ public class GenomPanelController implements Initializable {
 	}
 	@FXML
 	public void changeElite(ActionEvent event) {
+	}
+	/**
+	 * ツールチップの追加
+	 * @param b ボタン
+	 * @param str テキスト
+	 */
+	private void addTooltip(Button b, String str) {
+		Tooltip t = new Tooltip(str);
+		Tooltip.install(b, t);
 	}
 	/**
 	 * コンポーネント有効/無効
