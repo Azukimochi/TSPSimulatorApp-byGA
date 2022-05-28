@@ -133,7 +133,7 @@ public class GenomPanelController implements Initializable {
 		box_CityNum.setValue("3");
 		box_GenNum.setValue("10");
 		box_tournamentSize.setValue("5");
-		box_eliteSize.setValue("3");
+		box_eliteSize.setValue("1");
 		box_popNum.setValue("100");
 		box_cross.setValue("10");
 		box_mutation.setValue("5");
@@ -200,7 +200,7 @@ public class GenomPanelController implements Initializable {
 		box_CityNum.setValue("3");
 		box_GenNum.setValue("10");
 		box_tournamentSize.setValue("5");
-		box_eliteSize.setValue("3");
+		box_eliteSize.setValue("1");
 		box_popNum.setValue("100");
 		box_cross.setValue("10");
 		box_mutation.setValue("5");
@@ -427,6 +427,8 @@ public class GenomPanelController implements Initializable {
 		fileChooser.setInitialFileName("CityImage.png");
 		File f = fileChooser.showSaveDialog(GenomMain.getStage());
 		if (f != null) {
+			if( ! f.toString().substring(f.toString().length() - 4).equals(".png"))
+				f = new File(f + ".png");
 			BufferedImage image = new GenerateCityImage().getCityBufferedImage();
 			try {
 				ImageIO.write(image, "png", f);
@@ -477,8 +479,6 @@ public class GenomPanelController implements Initializable {
 		button_newCity.setDisable(bool);
 		button_apply.setDisable(!bool);
 		menu_Save.setDisable(!bool);
-		menu_Open.setDisable(bool);
-		menu_GenOpen.setDisable(bool);
 		menu_GenSave.setDisable(!bool);
 		menu_SaveIMG.setDisable(!bool);
 	}

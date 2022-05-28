@@ -14,6 +14,7 @@ import JsonObject.JsonGenomDate;
 import instance.City;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import util.Logger;
 
 public class GenomFileIO {
 
@@ -24,6 +25,8 @@ public class GenomFileIO {
 	 */
 	public static void saveCityPos(File url) {
 
+		if( ! url.toString().substring(url.toString().length() - 5).equals(".json"))
+			url = new File( url + ".json");
 		try (FileWriter filewriter = new FileWriter(url)) {
 			JsonCityDate jcity = new JsonCityDate();
 			jcity.cities = GA.getCity();
@@ -33,7 +36,7 @@ public class GenomFileIO {
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 			String sjson = mapper.writeValueAsString(jcity);
-			filewriter.write(sjson);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -56,11 +59,13 @@ public class GenomFileIO {
 			while ((line = reader.readLine()) != null) {
 				json.append(line);
 			}
+			Logger.Log("-----Loded File----");
+			Logger.Log(json);
 			ObjectMapper mapper = new ObjectMapper();
 			jcity = mapper.readValue(json.toString(), JsonCityDate.class);
 
 			for (City c : jcity.cities) {
-				if (0 <= c.getPosX() && c.getPosX() <= 300 && 0 <= c.getPosY() && c.getPosY() <= 300) {
+				if (!(0 <= c.getPosX() && c.getPosX() <= 300 && 0 <= c.getPosY() && c.getPosY() <= 300)) {
 					Alert alrt = new Alert(AlertType.INFORMATION); // アラートを作成
 					alrt.setTitle("読み込みエラー");
 					alrt.setHeaderText("入力データが範囲外です(0 <= x <= 300)");
@@ -81,6 +86,8 @@ public class GenomFileIO {
 
 	public static void saveGenDate(File url, JsonGenomDate jdate) {
 
+		if( ! url.toString().substring(url.toString().length() - 5).equals(".json"))
+			url = new File( url + ".json");
 		try (FileWriter filewriter = new FileWriter(url)) {
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
