@@ -16,11 +16,14 @@ public class GenomMain extends Application {
 	private static Stage primaryStage;
 
 	static {
-		System.setProperty("prism.allowhidpi", "false");
-		System.setProperty("glass.win.uiScale", "100%");
+		
+		
 	}
 	public static void main(String[] args) {
 
+		System.setProperty("Dglass.win.minHiDPI", "1");
+		System.out.println(System.getProperty("Dglass.win.minHiDPI"));
+		
 		boolean geneLog = false;
 		if (args.length == 0) {
 			launch(args);
