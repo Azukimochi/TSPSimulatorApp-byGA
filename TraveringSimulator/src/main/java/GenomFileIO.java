@@ -36,7 +36,7 @@ public class GenomFileIO {
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 			String sjson = mapper.writeValueAsString(jcity);
-			
+			filewriter.write(sjson);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

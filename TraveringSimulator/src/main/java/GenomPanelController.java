@@ -129,7 +129,7 @@ public class GenomPanelController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		cityPanel.setImage(new Image(GenerateCityImage.clearCityImage()));
-		componentChangeEnable(false);
+		changeAllComponentStats(false);
 		box_CityNum.setValue("3");
 		box_GenNum.setValue("10");
 		box_tournamentSize.setValue("5");
@@ -173,7 +173,7 @@ public class GenomPanelController implements Initializable {
 	@FXML
 	public void onButtonReset(ActionEvent event) {
 		System.out.println("----------Reset----------");
-		componentChangeEnable(false);
+		changeAllComponentStats(false);
 		box_CityNum.setDisable(true);
 		button_newCity.setDisable(true);
 		button_apply.setDisable(false);
@@ -190,7 +190,7 @@ public class GenomPanelController implements Initializable {
 	@FXML
 	public void onButtonInit(ActionEvent event) {
 		System.out.println("----------Initialize----------");
-		componentChangeEnable(false);
+		changeAllComponentStats(false);
 		cityPanel.setImage(new Image(GenerateCityImage.clearCityImage()));
 		Logger.Log(event.getTarget().toString());
 		chart.getData().setAll(GenomChartModel.addEmptyModel());
@@ -215,13 +215,19 @@ public class GenomPanelController implements Initializable {
 	 */
 	@FXML
 	public void onButtonApply(ActionEvent event) {
-		GA.initialize(Integer.valueOf(box_CityNum.getValue()), Integer.valueOf(box_GenNum.getValue()),
-				Integer.valueOf(box_popNum.getValue()), Integer.valueOf(box_cross.getValue()),
-				Integer.valueOf(box_mutation.getValue()), Integer.valueOf(box_eliteSize.getValue()),
-				Integer.valueOf(box_tournamentSize.getValue()), check_Elite.isSelected(),
-				CrossType.anyMatch(type_crossOver.getValue()), MutationType.anyMatch(type_mutation.getValue()),
+		GA.initialize(
+				Integer.valueOf(box_CityNum.getValue()), 
+				Integer.valueOf(box_GenNum.getValue()),
+				Integer.valueOf(box_popNum.getValue()), 
+				Integer.valueOf(box_cross.getValue()),
+				Integer.valueOf(box_mutation.getValue()), 
+				Integer.valueOf(box_eliteSize.getValue()),
+				Integer.valueOf(box_tournamentSize.getValue()), 
+				check_Elite.isSelected(),
+				CrossType.anyMatch(type_crossOver.getValue()), 
+				MutationType.anyMatch(type_mutation.getValue()),
 				ChoiceType.anyMatch(type_choice.getValue()));
-		componentChangeEnable(true);
+		changeAllComponentStats(true);
 		button_newCity.setDisable(true);
 		menu_GenSave.setDisable(false);
 		Runtime r = Runtime.getRuntime();
@@ -358,7 +364,7 @@ public class GenomPanelController implements Initializable {
 		if (f != null) {
 			jdate = GenomFileIO.ppenGenDate(f);
 
-			componentChangeEnable(false);
+			changeAllComponentStats(false);
 
 			GA.reset();
 			GA.setCity(jdate.cities);
@@ -392,7 +398,7 @@ public class GenomPanelController implements Initializable {
 			check_Elite.setSelected(jdate.isUseElite);
 			
 			
-			componentChangeEnable(true);
+			changeAllComponentStats(true);
 			button_newCity.setDisable(true);
 			menu_GenSave.setDisable(false);
 			
@@ -407,6 +413,8 @@ public class GenomPanelController implements Initializable {
 			
 			GenomSubPanelController.deleteTableDate();
 			List<Genom> bg = GA.getBestGenom();
+
+			
 			for (int i = 0; i < bg.size(); i++) {
 				GenomSubPanelController.setTableDate(
 						new GenDate(i + 1, bg.get(i).getEval(), bg.get(i).getDistance(), bg.get(i).getList().toString()));
@@ -445,6 +453,11 @@ public class GenomPanelController implements Initializable {
 	public void onOpenSubWindow(ActionEvent event) {
 		GenomMain.openSubWindow();
 	}
+	/**
+	 * エリート使用可否ボタン
+	 * 現在未使用
+	 * @param event
+	 */
 	@FXML
 	public void changeElite(ActionEvent event) {
 	}
@@ -461,7 +474,7 @@ public class GenomPanelController implements Initializable {
 	 * コンポーネント有効/無効
 	 * @param bool
 	 */
-	private void componentChangeEnable(boolean bool) {
+	private void changeAllComponentStats(boolean bool) {
 		sumGen = 0;
 		infoText.setText("");
 		box_CityNum.setDisable(bool);
