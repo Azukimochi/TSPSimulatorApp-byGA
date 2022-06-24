@@ -113,6 +113,13 @@ public class GA {
 		}
 	}
 	/**
+	 * 実行途中で実行世代数変更用
+	 * @param size 実行世代数
+	 */
+	public static void setProcessGenSize(int size) {
+		GenNum = size;
+	}
+	/**
 	 * トーナメントの大きさの取得
 	 * @return トーナメントの大きさ
 	 */

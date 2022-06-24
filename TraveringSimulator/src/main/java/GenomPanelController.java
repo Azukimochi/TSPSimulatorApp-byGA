@@ -42,7 +42,7 @@ public class GenomPanelController implements Initializable {
 
 	List<Genom> genom = new ArrayList<Genom>();
 	static GenerateCityImage cityImage;
-	ChangeListener<String> changeCity = ((ObservableValue<? extends String> observable, String oldValue,
+	ChangeListener<String> changeGenNum = ((ObservableValue<? extends String> observable, String oldValue,
 			String newValue) -> setValueToGA());
 	ChangeListener<Boolean> changeLimit = ((ObservableValue<? extends Boolean> observable, Boolean oldValue,
 			Boolean newValue) -> updateGraph());
@@ -109,8 +109,7 @@ public class GenomPanelController implements Initializable {
 	 * ボタン内容の変更のリスナ
 	 */
 	public void setValueToGA() {
-		button_apply.setDisable(true);
-		Logger.Log("wasChanged");
+		GA.setProcessGenSize(Integer.valueOf(box_GenNum.getValue()));
 	}
 	/**
 	 * グラフ描画更新用
@@ -143,7 +142,7 @@ public class GenomPanelController implements Initializable {
 		sumGen = 0;
 		chart.setAnimated(false);
 		button_Reset.setDisable(true);
-		box_CityNum.valueProperty().addListener(changeCity);
+		box_GenNum.valueProperty().addListener(changeGenNum);
 		addTooltip(button_Initialize, "すべてを初期化します");
 		addTooltip(button_Reset, "都市データを保持したまま遺伝子を初期化します");
 		addTooltip(button_apply, "現在の設定を適用します");
@@ -478,7 +477,6 @@ public class GenomPanelController implements Initializable {
 		box_CityNum.setDisable(bool);
 		box_cross.setDisable(bool);
 		box_eliteSize.setDisable(bool);
-		box_GenNum.setDisable(bool);
 		box_mutation.setDisable(bool);
 		box_popNum.setDisable(bool);
 		box_tournamentSize.setDisable(bool);

@@ -20,7 +20,7 @@ public class GenomSubPanelController implements Initializable{
 	@FXML
 	private TableView<GenDate> table;
 	@FXML
-	private TableColumn<GenDate, String> ColumGen;
+	private TableColumn<GenDate, Integer> ColumGen;
 	@FXML
 	private TableColumn<GenDate, String> ColumEval;
 	@FXML
@@ -58,6 +58,10 @@ public class GenomSubPanelController implements Initializable{
 		            t.getTablePosition().getRow())
 		            ).setGenom(t.getNewValue());
 		});
+		ColumGen.setSortable(false);
+		ColumDist.setSortable(false);
+		ColumEval.setSortable(false);
+		ColumGenom.setSortable(false);
 
 
 		table.setEditable(true);
