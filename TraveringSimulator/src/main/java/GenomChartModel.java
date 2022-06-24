@@ -20,7 +20,7 @@ public class GenomChartModel {
 	 * @param badgenom  最悪値遺伝子データ
 	 * @return Chart描画用データモデル
 	 */
-	public static List<Series<Integer, Double>> addChartModel(List<Genom> goodgenom, List<Genom> badgenom, boolean limit) {
+	public static List<Series<Integer, Double>> addChartModel(List<Genom> goodgenom, List<Genom> badgenom) {
 
 		List<Genom> good = new ArrayList<Genom> (goodgenom);
 		List<Genom> bad = new ArrayList<Genom> (badgenom);
@@ -31,10 +31,6 @@ public class GenomChartModel {
 		series.setName("最良値");
 		series2.setName("最悪値");
 
-		if(limit && good.size() > 1000) {
-			good = good.subList(good.size()-1000, good.size());
-			bad = bad.subList(bad.size()-1000, bad.size());
-		}
 		int comp = (int) (good.size() / 500);
 		for(int i = 0; i < good.size(); i ++) {
 

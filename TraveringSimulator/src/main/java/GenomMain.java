@@ -16,13 +16,13 @@ public class GenomMain extends Application {
 	private static Stage primaryStage;
 
 	static {
-		
+		System.setProperty("-Dglass.win.minHiDPI", "1");
+		System.out.println(System.getProperty("-Dglass.win.minHiDPI"));
 		
 	}
 	public static void main(String[] args) {
 
-		System.setProperty("-Dglass.win.minHiDPI", "1");
-		System.out.println(System.getProperty("-Dglass.win.minHiDPI"));
+
 		
 		boolean geneLog = false;
 		if (args.length == 0) {

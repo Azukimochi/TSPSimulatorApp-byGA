@@ -30,7 +30,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -82,8 +81,6 @@ public class GenomPanelController implements Initializable {
 	@FXML
 	private MenuItem menu_OpenWindow;
 	@FXML
-	private RadioMenuItem radio_Limit;
-	@FXML
 	private ComboBox<String> box_CityNum;
 	@FXML
 	private ComboBox<String> box_GenNum;
@@ -121,7 +118,7 @@ public class GenomPanelController implements Initializable {
 	public void updateGraph() {
 		if (GA.getBestGenom().size() != 0)
 			chart.getData().setAll(
-					GenomChartModel.addChartModel(GA.getBestGenom(), GA.getWorstGenom(), radio_Limit.isSelected()));
+					GenomChartModel.addChartModel(GA.getBestGenom(), GA.getWorstGenom()));
 	}
 	/**
 	 * ボタン：初期化
@@ -145,8 +142,8 @@ public class GenomPanelController implements Initializable {
 		infoDist.setText("");
 		sumGen = 0;
 		chart.setAnimated(false);
+		button_Reset.setDisable(true);
 		box_CityNum.valueProperty().addListener(changeCity);
-		radio_Limit.selectedProperty().addListener(changeLimit);
 		addTooltip(button_Initialize, "すべてを初期化します");
 		addTooltip(button_Reset, "都市データを保持したまま遺伝子を初期化します");
 		addTooltip(button_apply, "現在の設定を適用します");
@@ -244,7 +241,7 @@ public class GenomPanelController implements Initializable {
 		Logger.Log(event.getTarget().toString());
 
 		cityPanel.setImage(new Image(cityImage.Generate(genom.get(genom.size() - 1), true)));
-		chart.getData().setAll(GenomChartModel.addChartModel(genom, GA.getWorstGenom(), radio_Limit.isSelected()));
+		chart.getData().setAll(GenomChartModel.addChartModel(genom, GA.getWorstGenom()));
 		sumGen += Integer.valueOf(box_GenNum.getValue());
 		infoText.setText("累積交配数：" + sumGen);
 		infoDist.setText("距離：" + GA.getBestGenom().get(GA.getBestGenom().size() - 1).getDistance());
@@ -289,6 +286,7 @@ public class GenomPanelController implements Initializable {
 				cityPanel.setImage(new Image(cityImage.Generate(null, false)));
 				button_apply.setDisable(false);
 				menu_Save.setDisable(false);
+				button_Reset.setDisable(false);
 			}
 		}
 		Logger.Log(event.getTarget().toString());
@@ -401,7 +399,7 @@ public class GenomPanelController implements Initializable {
 			changeAllComponentStats(true);
 			button_newCity.setDisable(true);
 			menu_GenSave.setDisable(false);
-			
+			button_Reset.setDisable(false);
 			button_apply.setDisable(true);
 			Logger.Log(event.getTarget().toString());
 			
@@ -409,7 +407,7 @@ public class GenomPanelController implements Initializable {
 			chart.getData().setAll(GenomChartModel.addEmptyModel());
 			cityImage = new GenerateCityImage();
 			cityPanel.setImage(new Image(cityImage.Generate(genom.get(genom.size() - 1), true)));
-			chart.getData().setAll(GenomChartModel.addChartModel(genom, GA.getWorstGenom(), radio_Limit.isSelected()));
+			chart.getData().setAll(GenomChartModel.addChartModel(genom, GA.getWorstGenom()));
 			
 			GenomSubPanelController.deleteTableDate();
 			List<Genom> bg = GA.getBestGenom();

@@ -145,23 +145,17 @@
 				<Menu mnemonicParsing="false" text="ファイル">
 					<items>
 						<MenuItem fx:id="menu_Open" mnemonicParsing="false"
-							onAction="#onMenuOpen" text="都市データを開く" />
+							onAction="#onMenuOpen" text="都市データを読み込む" />
 						<MenuItem fx:id="menu_Save" mnemonicParsing="false"
 							onAction="#onMenuSave" text="都市データを保存" />
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem fx:id="menu_GenOpen" mnemonicParsing="false"
-							onAction="#onMenuGenOpen" text="ファイルを開く" />
+							onAction="#onMenuGenOpen" text="ファイルから状態を読み込む" />
 						<MenuItem fx:id="menu_GenSave" mnemonicParsing="false"
-							onAction="#onMenuGenSave" text="保存" />
+							onAction="#onMenuGenSave" text="現在の状態を保存" />
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem fx:id="menu_SaveIMG" mnemonicParsing="false"
 							onAction="#onMenuSaveIMG" text="現在の都市画像を保存" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="表示">
-					<items>
-						<RadioMenuItem fx:id="radio_Limit"
-							mnemonicParsing="false" text="1000世代制限" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="ウィンドウ">
