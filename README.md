@@ -1,10 +1,12 @@
-## TravelingSimulator
+## TravelingSimulator　
+遺伝的アルゴリズムを用いて巡回セールスマン問題を解くシミュレータアプリです．
+VM引数に ”-Dglass.win.minHiDPI=1”を追加して起動してください．
 
-### Require Local JavaFX 1.8 Library and Set VM Argument
-```
---module-path $PATH_TO_FX --add-modules javafx.controls,javafx.fxml,javafx.web
-```
+A simulator app that solves the traveling salesman problem using a genetic algorithm.
+Please add "-Dglass.win.minHiDPI=1" in the VMargument when using.   
+And sorry, this app is JP Language ONLY.
 
-### List of libraries used in this project
+### 使用したライブラリのリスト List of libraries used in this project
 1. JavaFX 1.8 <https://github.com/openjdk/jfx>
 2. ScaledFX <https://github.com/miho/ScaledFX>
+3. jackson https://github.com/FasterXML/jackson
