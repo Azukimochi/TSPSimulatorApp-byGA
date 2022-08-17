@@ -6,6 +6,9 @@ A simulator app that solves the traveling salesman problem using a genetic algor
 Please add "-Dglass.win.minHiDPI=1" in the VMargument when using.  
 And sorry, this app is JP Language ONLY.  
 
+JDK 1.8.0_u202にて作成
+Create by JDK 1.8.0_u202
+
 ### 使用したライブラリのリスト List of libraries used in this project
 このプロジェクトはMavenを使用しています.  
 This project uses Maven.  
